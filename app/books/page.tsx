@@ -9,56 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BookTable } from "@/components/book-table";
+import { prisma } from "@/lib/prisma";
 
-export default function BooksPage() {
-  // Contoh data buku
-  const books = [
-    {
-      id: "1",
-      title: "Pemrograman Web",
-      author: "John Doe",
-      publisher: "Tech Publishing",
-      year: 2022,
-      isbn: "978-1234567890",
-      stock: 5,
-    },
-    {
-      id: "2",
-      title: "Database Design",
-      author: "Jane Smith",
-      publisher: "Data Books",
-      year: 2021,
-      isbn: "978-0987654321",
-      stock: 3,
-    },
-    {
-      id: "3",
-      title: "Artificial Intelligence",
-      author: "Robert Johnson",
-      publisher: "AI Press",
-      year: 2023,
-      isbn: "978-5678901234",
-      stock: 2,
-    },
-    {
-      id: "4",
-      title: "Data Structures",
-      author: "Emily Davis",
-      publisher: "Code Books",
-      year: 2020,
-      isbn: "978-4321098765",
-      stock: 0,
-    },
-    {
-      id: "5",
-      title: "Machine Learning",
-      author: "Michael Brown",
-      publisher: "Tech Publishing",
-      year: 2022,
-      isbn: "978-9876543210",
-      stock: 4,
-    },
-  ];
+// Pastikan ini adalah server component (tidak pakai "use client")
+export default async function BooksPage() {
+  // Ambil data buku asli dari database
+  const books = await prisma.book.findMany({
+    orderBy: { title: "asc" },
+  });
 
   return (
     <div className="flex flex-col gap-6">
