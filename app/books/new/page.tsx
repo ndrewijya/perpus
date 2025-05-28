@@ -122,7 +122,9 @@ export default function NewBookPage() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="isbn">ISBN</Label>
+              <Label htmlFor="isbn">
+                ISBN <span className="text-destructive">*</span>
+              </Label>
               <Input id="isbn" name="isbn" />
             </div>
             <div className="space-y-2">

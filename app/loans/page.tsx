@@ -8,57 +8,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LoanTable } from "@/components/loan-table";
+import LoanTable from "@/components/loan-table";
+import { prisma } from "@/lib/prisma";
 
-export default function LoansPage() {
-  // Contoh data peminjaman
-  const loans = [
-    {
-      id: "1",
-      userId: "1",
-      user: { name: "John Doe" },
-      loanDate: new Date("2023-06-01"),
-      returnDate: null,
-      status: "BORROWED",
-      _count: { loanItems: 2 },
+export default async function LoansPage() {
+  // Ambil data peminjaman asli dari database
+  const loansRaw = await prisma.loan.findMany({
+    include: {
+      member: true,
+      loanItems: { include: { book: true } },
     },
-    {
-      id: "2",
-      userId: "2",
-      user: { name: "Jane Smith" },
-      loanDate: new Date("2023-06-05"),
-      returnDate: new Date("2023-06-15"),
-      status: "RETURNED",
-      _count: { loanItems: 1 },
-    },
-    {
-      id: "3",
-      userId: "3",
-      user: { name: "Robert Johnson" },
-      loanDate: new Date("2023-06-10"),
-      returnDate: null,
-      status: "BORROWED",
-      _count: { loanItems: 3 },
-    },
-    {
-      id: "4",
-      userId: "4",
-      user: { name: "Emily Davis" },
-      loanDate: new Date("2023-06-15"),
-      returnDate: null,
-      status: "OVERDUE",
-      _count: { loanItems: 2 },
-    },
-    {
-      id: "5",
-      userId: "5",
-      user: { name: "Michael Brown" },
-      loanDate: new Date("2023-06-20"),
-      returnDate: new Date("2023-06-25"),
-      status: "RETURNED",
-      _count: { loanItems: 1 },
-    },
-  ];
+    orderBy: { loanDate: "desc" },
+  });
+
+  const loans = loansRaw.map((loan) => ({
+    ...loan,
+    loanDate: loan.loanDate ? loan.loanDate.toISOString() : "",
+    dueDate: loan.dueDate ? loan.dueDate.toISOString() : "",
+    returnDate: loan.returnDate ? loan.returnDate.toISOString() : "",
+  }));
 
   return (
     <div className="flex flex-col gap-6">

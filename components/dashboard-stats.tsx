@@ -3,8 +3,8 @@ import type { LucideIcon } from "lucide-react";
 
 interface DashboardStatsProps {
   title: string;
-  value: number;
-  description: string;
+  value?: number;
+  description?: string;
   icon: LucideIcon;
 }
 
@@ -21,8 +21,16 @@ export function DashboardStats({
         <Icon className="h-4 w-4 text-primary" />
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{value.toLocaleString()}</div>
-        <p className="text-xs text-muted-foreground">{description}</p>
+        {value !== undefined && value > 0 ? (
+          <>
+            <div className="text-2xl font-bold">{value.toLocaleString()}</div>
+            {description && (
+              <p className="text-xs text-muted-foreground">{description}</p>
+            )}
+          </>
+        ) : (
+          <p className="text-center text-muted-foreground">Belum ada data.</p>
+        )}
       </CardContent>
     </Card>
   );

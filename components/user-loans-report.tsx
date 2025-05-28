@@ -6,94 +6,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Users } from "lucide-react";
-import { formatDate } from "@/lib/utils";
 
-export function UserLoansReport() {
-  // Contoh data peminjaman per anggota
-  const users = [
-    {
-      id: "1",
-      name: "John Doe",
-      email: "john@example.com",
-      loans: [
-        {
-          id: "1",
-          loanDate: new Date("2023-06-01"),
-          returnDate: null,
-          status: "BORROWED",
-          loanItems: [
-            {
-              id: "1",
-              book: { title: "Pemrograman Web", author: "John Doe" },
-              returned: false,
-            },
-            {
-              id: "2",
-              book: { title: "Database Design", author: "Jane Smith" },
-              returned: false,
-            },
-          ],
-        },
-      ],
-      _count: { loans: 1 },
-    },
-    {
-      id: "2",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      loans: [
-        {
-          id: "2",
-          loanDate: new Date("2023-06-05"),
-          returnDate: new Date("2023-06-15"),
-          status: "RETURNED",
-          loanItems: [
-            {
-              id: "3",
-              book: {
-                title: "Artificial Intelligence",
-                author: "Robert Johnson",
-              },
-              returned: true,
-            },
-          ],
-        },
-      ],
-      _count: { loans: 1 },
-    },
-    {
-      id: "3",
-      name: "Robert Johnson",
-      email: "robert@example.com",
-      loans: [
-        {
-          id: "3",
-          loanDate: new Date("2023-06-10"),
-          returnDate: null,
-          status: "BORROWED",
-          loanItems: [
-            {
-              id: "4",
-              book: { title: "Data Structures", author: "Emily Davis" },
-              returned: false,
-            },
-            {
-              id: "5",
-              book: { title: "Machine Learning", author: "Michael Brown" },
-              returned: false,
-            },
-            {
-              id: "6",
-              book: { title: "Web Development", author: "Sarah Wilson" },
-              returned: false,
-            },
-          ],
-        },
-      ],
-      _count: { loans: 1 },
-    },
-  ];
+interface UserLoansReportProps {
+  users: {
+    id: string;
+    name: string;
+    email: string;
+    loans: {
+      id: string;
+      loanDate: Date;
+      returnDate: Date | null;
+      status: string;
+      loanItems: {
+        id: string;
+        book: { title: string; author: string };
+        returned: boolean;
+      }[];
+    }[];
+  }[];
+}
 
+function formatDate(date: Date | string) {
+  return new Date(date).toLocaleDateString("id-ID");
+}
+
+export default function UserLoansReport({ users }: UserLoansReportProps) {
   return (
     <Card>
       <CardHeader>
@@ -123,10 +60,9 @@ export function UserLoansReport() {
                   </div>
                   <div className="text-sm">
                     Total Peminjaman:{" "}
-                    <span className="font-medium">{user._count.loans}</span>
+                    <span className="font-medium">{user.loans.length}</span>
                   </div>
                 </div>
-
                 {user.loans.length === 0 ? (
                   <p className="p-3 text-center text-muted-foreground">
                     Belum ada peminjaman

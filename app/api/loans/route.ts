@@ -1,63 +1,86 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+type TransactionClient = Parameters<
+  Parameters<typeof prisma.$transaction>[0]
+>[0];
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { userId, bookIds } = body;
+    const { memberId, books, dueDate } = body;
 
-    if (!userId || !bookIds || bookIds.length === 0) {
+    if (
+      !memberId ||
+      !books ||
+      !Array.isArray(books) ||
+      books.length === 0 ||
+      !dueDate
+    ) {
       return NextResponse.json(
-        { error: "Data tidak lengkap" },
+        {
+          error:
+            "Data tidak lengkap. Anggota, buku, dan tanggal jatuh tempo wajib diisi.",
+        },
         { status: 400 }
       );
     }
 
-    // Verifikasi stok buku
-    const books = await prisma.book.findMany({
-      where: {
-        id: {
-          in: bookIds,
-        },
-      },
+    const parsedDueDate = new Date(dueDate);
+    if (isNaN(parsedDueDate.getTime())) {
+      return NextResponse.json(
+        { error: "Tanggal jatuh tempo tidak valid." },
+        { status: 400 }
+      );
+    }
+
+    // Ambil data buku dari database
+    const bookIds = books.map((b: any) => b.bookId);
+    const dbBooks = await prisma.book.findMany({
+      where: { id: { in: bookIds } },
     });
 
-    // Periksa apakah semua buku tersedia
-    for (const book of books) {
-      if (book.stock <= 0) {
+    // Validasi stok
+    for (const { bookId, quantity } of books) {
+      const dbBook = dbBooks.find((b) => b.id === bookId);
+      if (!dbBook) {
         return NextResponse.json(
-          { error: `Buku "${book.title}" tidak tersedia (stok habis)` },
+          { error: `Buku dengan ID "${bookId}" tidak ditemukan.` },
+          { status: 400 }
+        );
+      }
+      if (dbBook.stock < quantity) {
+        return NextResponse.json(
+          { error: `Stok buku "${dbBook.title}" tidak cukup.` },
           { status: 400 }
         );
       }
     }
 
-    // Buat peminjaman dalam transaksi
-    const loan = await prisma.$transaction(async (tx) => {
-      // Buat peminjaman
+    // Transaksi: buat loan, loanItem, update stok
+    const loan = await prisma.$transaction(async (tx: TransactionClient) => {
       const newLoan = await tx.loan.create({
         data: {
-          userId,
+          memberId: memberId,
+          loanDate: new Date(),
+          dueDate: parsedDueDate,
           status: "BORROWED",
         },
       });
 
-      // Tambahkan item peminjaman dan kurangi stok buku
-      for (const bookId of bookIds) {
+      for (const { bookId, quantity } of books) {
         await tx.loanItem.create({
           data: {
             loanId: newLoan.id,
             bookId,
+            quantity,
           },
         });
 
-        // Kurangi stok buku
         await tx.book.update({
           where: { id: bookId },
           data: {
-            stock: {
-              decrement: 1,
-            },
+            stock: { decrement: quantity },
           },
         });
       }
@@ -65,7 +88,7 @@ export async function POST(request: Request) {
       return newLoan;
     });
 
-    return NextResponse.json(loan);
+    return NextResponse.json(loan, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -78,20 +101,16 @@ export async function POST(request: Request) {
 export async function GET() {
   try {
     const loans = await prisma.loan.findMany({
-      orderBy: {
-        loanDate: "desc",
-      },
+      orderBy: { loanDate: "desc" },
       include: {
-        user: true,
+        member: true,
         loanItems: {
-          include: {
-            book: true,
-          },
+          include: { book: true },
         },
       },
     });
 
-    return NextResponse.json(loans);
+    return NextResponse.json(loans, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

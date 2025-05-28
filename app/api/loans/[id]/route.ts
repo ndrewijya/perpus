@@ -6,12 +6,12 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    const { id } = params;
+
     const loan = await prisma.loan.findUnique({
-      where: {
-        id: params.id,
-      },
+      where: { id },
       include: {
-        user: true,
+        member: true, // relasi ke anggota
         loanItems: {
           include: {
             book: true,

@@ -1,10 +1,5 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+export const dynamic = "force-dynamic";
+import { getDashboardStats } from "@/lib/dashboard";
 import {
   BookOpen,
   Users,
@@ -16,19 +11,17 @@ import {
 import { DashboardStats } from "@/components/dashboard-stats";
 import { RecentActivities } from "@/components/recent-activities";
 import { PopularBooks } from "@/components/popular-books";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { DashboardRefreshButton } from "@/components/dashboard-refresh-button";
 
-export default function Dashboard() {
-  // Contoh data statistik
-  const stats = {
-    totalBooks: 245,
-    newBooks: 4,
-    totalMembers: 120,
-    newMembers: 8,
-    activeLoans: 32,
-    dueThisWeek: 12,
-    totalLoans: 621,
-    loansLastMonth: 42,
-  };
+export default async function Dashboard() {
+  const stats = await getDashboardStats();
 
   return (
     <div className="space-y-6">
@@ -41,29 +34,50 @@ export default function Dashboard() {
         </p>
       </div>
 
+      {/* Tombol refresh dashboard */}
+      <div className="flex justify-end mb-2">
+        <DashboardRefreshButton />
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <DashboardStats
           title="Total Buku"
           value={stats.totalBooks}
-          description={`+${stats.newBooks} buku baru bulan ini`}
+          description={
+            stats.newBooks > 0
+              ? `+${stats.newBooks} buku baru bulan ini`
+              : undefined
+          }
           icon={BookOpen}
         />
         <DashboardStats
           title="Total Anggota"
           value={stats.totalMembers}
-          description={`+${stats.newMembers} anggota baru bulan ini`}
+          description={
+            stats.newMembers > 0
+              ? `+${stats.newMembers} anggota baru bulan ini`
+              : undefined
+          }
           icon={Users}
         />
         <DashboardStats
           title="Peminjaman Aktif"
           value={stats.activeLoans}
-          description={`${stats.dueThisWeek} jatuh tempo minggu ini`}
+          description={
+            stats.dueThisWeek > 0
+              ? `${stats.dueThisWeek} jatuh tempo minggu ini`
+              : undefined
+          }
           icon={BookMarked}
         />
         <DashboardStats
           title="Total Peminjaman"
           value={stats.totalLoans}
-          description={`+${stats.loansLastMonth} dari bulan lalu`}
+          description={
+            stats.loansLastMonth > 0
+              ? `+${stats.loansLastMonth} dari bulan lalu`
+              : undefined
+          }
           icon={BarChart3}
         />
       </div>
@@ -80,7 +94,7 @@ export default function Dashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <RecentActivities />
+            <RecentActivities activities={stats.recentActivities} />
           </CardContent>
         </Card>
         <Card className="lg:col-span-3">
@@ -92,7 +106,7 @@ export default function Dashboard() {
             <CardDescription>Buku yang paling sering dipinjam</CardDescription>
           </CardHeader>
           <CardContent>
-            <PopularBooks />
+            <PopularBooks books={stats.popularBooks} />
           </CardContent>
         </Card>
       </div>

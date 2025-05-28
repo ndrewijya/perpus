@@ -4807,8 +4807,8 @@ export namespace Prisma {
     returned?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    loan?: boolean | LoanDefaultArgs<ExtArgs>
     book?: boolean | BookDefaultArgs<ExtArgs>
+    loan?: boolean | LoanDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["loanItem"]>
 
   export type LoanItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4818,8 +4818,8 @@ export namespace Prisma {
     returned?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    loan?: boolean | LoanDefaultArgs<ExtArgs>
     book?: boolean | BookDefaultArgs<ExtArgs>
+    loan?: boolean | LoanDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["loanItem"]>
 
   export type LoanItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4829,8 +4829,8 @@ export namespace Prisma {
     returned?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    loan?: boolean | LoanDefaultArgs<ExtArgs>
     book?: boolean | BookDefaultArgs<ExtArgs>
+    loan?: boolean | LoanDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["loanItem"]>
 
   export type LoanItemSelectScalar = {
@@ -4844,23 +4844,23 @@ export namespace Prisma {
 
   export type LoanItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "loanId" | "bookId" | "returned" | "createdAt" | "updatedAt", ExtArgs["result"]["loanItem"]>
   export type LoanItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    loan?: boolean | LoanDefaultArgs<ExtArgs>
     book?: boolean | BookDefaultArgs<ExtArgs>
+    loan?: boolean | LoanDefaultArgs<ExtArgs>
   }
   export type LoanItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    loan?: boolean | LoanDefaultArgs<ExtArgs>
     book?: boolean | BookDefaultArgs<ExtArgs>
+    loan?: boolean | LoanDefaultArgs<ExtArgs>
   }
   export type LoanItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    loan?: boolean | LoanDefaultArgs<ExtArgs>
     book?: boolean | BookDefaultArgs<ExtArgs>
+    loan?: boolean | LoanDefaultArgs<ExtArgs>
   }
 
   export type $LoanItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "LoanItem"
     objects: {
-      loan: Prisma.$LoanPayload<ExtArgs>
       book: Prisma.$BookPayload<ExtArgs>
+      loan: Prisma.$LoanPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5263,8 +5263,8 @@ export namespace Prisma {
    */
   export interface Prisma__LoanItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    loan<T extends LoanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LoanDefaultArgs<ExtArgs>>): Prisma__LoanClient<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     book<T extends BookDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BookDefaultArgs<ExtArgs>>): Prisma__BookClient<$Result.GetResult<Prisma.$BookPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    loan<T extends LoanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LoanDefaultArgs<ExtArgs>>): Prisma__LoanClient<$Result.GetResult<Prisma.$LoanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6116,8 +6116,8 @@ export namespace Prisma {
     returned?: BoolFilter<"LoanItem"> | boolean
     createdAt?: DateTimeFilter<"LoanItem"> | Date | string
     updatedAt?: DateTimeFilter<"LoanItem"> | Date | string
-    loan?: XOR<LoanScalarRelationFilter, LoanWhereInput>
     book?: XOR<BookScalarRelationFilter, BookWhereInput>
+    loan?: XOR<LoanScalarRelationFilter, LoanWhereInput>
   }
 
   export type LoanItemOrderByWithRelationInput = {
@@ -6127,8 +6127,8 @@ export namespace Prisma {
     returned?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    loan?: LoanOrderByWithRelationInput
     book?: BookOrderByWithRelationInput
+    loan?: LoanOrderByWithRelationInput
   }
 
   export type LoanItemWhereUniqueInput = Prisma.AtLeast<{
@@ -6142,8 +6142,8 @@ export namespace Prisma {
     returned?: BoolFilter<"LoanItem"> | boolean
     createdAt?: DateTimeFilter<"LoanItem"> | Date | string
     updatedAt?: DateTimeFilter<"LoanItem"> | Date | string
-    loan?: XOR<LoanScalarRelationFilter, LoanWhereInput>
     book?: XOR<BookScalarRelationFilter, BookWhereInput>
+    loan?: XOR<LoanScalarRelationFilter, LoanWhereInput>
   }, "id" | "loanId_bookId">
 
   export type LoanItemOrderByWithAggregationInput = {
@@ -6417,8 +6417,8 @@ export namespace Prisma {
     returned?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    loan: LoanCreateNestedOneWithoutLoanItemsInput
     book: BookCreateNestedOneWithoutLoanItemsInput
+    loan: LoanCreateNestedOneWithoutLoanItemsInput
   }
 
   export type LoanItemUncheckedCreateInput = {
@@ -6435,8 +6435,8 @@ export namespace Prisma {
     returned?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    loan?: LoanUpdateOneRequiredWithoutLoanItemsNestedInput
     book?: BookUpdateOneRequiredWithoutLoanItemsNestedInput
+    loan?: LoanUpdateOneRequiredWithoutLoanItemsNestedInput
   }
 
   export type LoanItemUncheckedUpdateInput = {
@@ -6804,14 +6804,14 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type LoanScalarRelationFilter = {
-    is?: LoanWhereInput
-    isNot?: LoanWhereInput
-  }
-
   export type BookScalarRelationFilter = {
     is?: BookWhereInput
     isNot?: BookWhereInput
+  }
+
+  export type LoanScalarRelationFilter = {
+    is?: LoanWhereInput
+    isNot?: LoanWhereInput
   }
 
   export type LoanItemLoanIdBookIdCompoundUniqueInput = {
@@ -7030,28 +7030,20 @@ export namespace Prisma {
     deleteMany?: LoanItemScalarWhereInput | LoanItemScalarWhereInput[]
   }
 
-  export type LoanCreateNestedOneWithoutLoanItemsInput = {
-    create?: XOR<LoanCreateWithoutLoanItemsInput, LoanUncheckedCreateWithoutLoanItemsInput>
-    connectOrCreate?: LoanCreateOrConnectWithoutLoanItemsInput
-    connect?: LoanWhereUniqueInput
-  }
-
   export type BookCreateNestedOneWithoutLoanItemsInput = {
     create?: XOR<BookCreateWithoutLoanItemsInput, BookUncheckedCreateWithoutLoanItemsInput>
     connectOrCreate?: BookCreateOrConnectWithoutLoanItemsInput
     connect?: BookWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type LoanUpdateOneRequiredWithoutLoanItemsNestedInput = {
+  export type LoanCreateNestedOneWithoutLoanItemsInput = {
     create?: XOR<LoanCreateWithoutLoanItemsInput, LoanUncheckedCreateWithoutLoanItemsInput>
     connectOrCreate?: LoanCreateOrConnectWithoutLoanItemsInput
-    upsert?: LoanUpsertWithoutLoanItemsInput
     connect?: LoanWhereUniqueInput
-    update?: XOR<XOR<LoanUpdateToOneWithWhereWithoutLoanItemsInput, LoanUpdateWithoutLoanItemsInput>, LoanUncheckedUpdateWithoutLoanItemsInput>
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type BookUpdateOneRequiredWithoutLoanItemsNestedInput = {
@@ -7060,6 +7052,14 @@ export namespace Prisma {
     upsert?: BookUpsertWithoutLoanItemsInput
     connect?: BookWhereUniqueInput
     update?: XOR<XOR<BookUpdateToOneWithWhereWithoutLoanItemsInput, BookUpdateWithoutLoanItemsInput>, BookUncheckedUpdateWithoutLoanItemsInput>
+  }
+
+  export type LoanUpdateOneRequiredWithoutLoanItemsNestedInput = {
+    create?: XOR<LoanCreateWithoutLoanItemsInput, LoanUncheckedCreateWithoutLoanItemsInput>
+    connectOrCreate?: LoanCreateOrConnectWithoutLoanItemsInput
+    upsert?: LoanUpsertWithoutLoanItemsInput
+    connect?: LoanWhereUniqueInput
+    update?: XOR<XOR<LoanUpdateToOneWithWhereWithoutLoanItemsInput, LoanUpdateWithoutLoanItemsInput>, LoanUncheckedUpdateWithoutLoanItemsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7491,31 +7491,6 @@ export namespace Prisma {
     data: XOR<LoanItemUpdateManyMutationInput, LoanItemUncheckedUpdateManyWithoutLoanInput>
   }
 
-  export type LoanCreateWithoutLoanItemsInput = {
-    id?: string
-    loanDate?: Date | string
-    returnDate?: Date | string | null
-    status?: $Enums.LoanStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutLoansInput
-  }
-
-  export type LoanUncheckedCreateWithoutLoanItemsInput = {
-    id?: string
-    userId: string
-    loanDate?: Date | string
-    returnDate?: Date | string | null
-    status?: $Enums.LoanStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type LoanCreateOrConnectWithoutLoanItemsInput = {
-    where: LoanWhereUniqueInput
-    create: XOR<LoanCreateWithoutLoanItemsInput, LoanUncheckedCreateWithoutLoanItemsInput>
-  }
-
   export type BookCreateWithoutLoanItemsInput = {
     id?: string
     title: string
@@ -7547,35 +7522,29 @@ export namespace Prisma {
     create: XOR<BookCreateWithoutLoanItemsInput, BookUncheckedCreateWithoutLoanItemsInput>
   }
 
-  export type LoanUpsertWithoutLoanItemsInput = {
-    update: XOR<LoanUpdateWithoutLoanItemsInput, LoanUncheckedUpdateWithoutLoanItemsInput>
+  export type LoanCreateWithoutLoanItemsInput = {
+    id?: string
+    loanDate?: Date | string
+    returnDate?: Date | string | null
+    status?: $Enums.LoanStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutLoansInput
+  }
+
+  export type LoanUncheckedCreateWithoutLoanItemsInput = {
+    id?: string
+    userId: string
+    loanDate?: Date | string
+    returnDate?: Date | string | null
+    status?: $Enums.LoanStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LoanCreateOrConnectWithoutLoanItemsInput = {
+    where: LoanWhereUniqueInput
     create: XOR<LoanCreateWithoutLoanItemsInput, LoanUncheckedCreateWithoutLoanItemsInput>
-    where?: LoanWhereInput
-  }
-
-  export type LoanUpdateToOneWithWhereWithoutLoanItemsInput = {
-    where?: LoanWhereInput
-    data: XOR<LoanUpdateWithoutLoanItemsInput, LoanUncheckedUpdateWithoutLoanItemsInput>
-  }
-
-  export type LoanUpdateWithoutLoanItemsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    loanDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutLoansNestedInput
-  }
-
-  export type LoanUncheckedUpdateWithoutLoanItemsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    loanDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type BookUpsertWithoutLoanItemsInput = {
@@ -7611,6 +7580,37 @@ export namespace Prisma {
     isbn?: NullableStringFieldUpdateOperationsInput | string | null
     stock?: IntFieldUpdateOperationsInput | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LoanUpsertWithoutLoanItemsInput = {
+    update: XOR<LoanUpdateWithoutLoanItemsInput, LoanUncheckedUpdateWithoutLoanItemsInput>
+    create: XOR<LoanCreateWithoutLoanItemsInput, LoanUncheckedCreateWithoutLoanItemsInput>
+    where?: LoanWhereInput
+  }
+
+  export type LoanUpdateToOneWithWhereWithoutLoanItemsInput = {
+    where?: LoanWhereInput
+    data: XOR<LoanUpdateWithoutLoanItemsInput, LoanUncheckedUpdateWithoutLoanItemsInput>
+  }
+
+  export type LoanUpdateWithoutLoanItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    loanDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutLoansNestedInput
+  }
+
+  export type LoanUncheckedUpdateWithoutLoanItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    loanDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: EnumLoanStatusFieldUpdateOperationsInput | $Enums.LoanStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
